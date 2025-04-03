@@ -115,18 +115,18 @@ cd B.A.R.S.A
 ---
 
 ### 🎤 Transcrição de Áudio para Texto
-- [ ] Implementar transcrição de áudio capturado pelo microfone
-  - [ ] Criar módulo `utils/audio_utils.py`
-  - [ ] Utilizar biblioteca `speech_recognition` para capturar e processar áudio
+- [x] Implementar transcrição de áudio capturado pelo microfone
+  - [x] Criar módulo `utils/audio_utils.py`
+  - [x] Utilizar biblioteca `speech_recognition` para capturar e processar áudio
   - [ ] Testar funcionalidade em diferentes ambientes (ruído, volume baixo, etc.)
   - [ ] Integrar transcrição com respostas da IA
 
 ---
 
 ### 💬 Resposta a Mensagens de Texto
-- [ ] Integrar modelo de linguagem da OpenAI para responder mensagens de texto
-  - [ ] Criar classe `OpenAIModel` em `models/openai_model.py`
-  - [ ] Garantir autenticação segura com a API da OpenAI
+- [x] Integrar modelo de linguagem da OpenAI para responder mensagens de texto
+  - [x] Criar classe `OpenAIModel` em `models/openai_model.py`
+  - [x] Garantir autenticação segura com a API da OpenAI
   - [ ] Testar integração com exemplos de perguntas/respostas
   - [ ] Otimizar latência das respostas
 

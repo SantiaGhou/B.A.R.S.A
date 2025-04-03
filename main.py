@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from utils.audio_utils import transcribe_audio
 from models.openai_model import OpenAIModel
+from interfaces.gui import main as gui_main
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -18,9 +19,10 @@ def main():
         print("\nModos disponíveis:")
         print("1. Transcrever áudio do microfone")
         print("2. Fazer uma pergunta em texto")
-        print("3. Sair")
+        print("3. Abrir interface gráfica")
+        print("4. Sair")
         
-        choice = input("Escolha um modo (1/2/3): ").strip()
+        choice = input("Escolha um modo (1/2/3/4): ").strip()
         
         if choice == "1":
             print("Iniciando transcrição de áudio...")
@@ -40,6 +42,10 @@ def main():
             print(f"Barsa: {response}")
         
         elif choice == "3":
+            print("Abrindo interface gráfica...")
+            gui_main(openai_api_key)
+        
+        elif choice == "4":
             print("Encerrando Barsa. Até mais!")
             break
         
