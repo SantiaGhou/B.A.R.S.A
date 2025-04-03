@@ -1,4 +1,5 @@
 import openai
+from utils.program_utils import execute_program
 
 class OpenAIModel:
     def __init__(self, api_key):
@@ -6,6 +7,9 @@ class OpenAIModel:
 
     def generate_response(self, prompt):
         try:
+            prompt_lower = prompt.lower()
+            if "abrir" in prompt_lower or "fechar" in prompt_lower or "volume" in prompt_lower:
+                return execute_program(prompt)
             response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
