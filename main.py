@@ -35,11 +35,23 @@ def main():
                 print(f"Erro durante a transcrição: {e}")
         
         elif choice == "2":
-            user_input = input("Faça sua pergunta: ").strip()
-            if user_input.lower() in ["sair", "exit"]:
-                break
-            response = openai_model.generate_response(user_input)
-            print(f"Barsa: {response}")
+            print("\nModo texto ativado! Converse comigo aqui.")
+            print("Digite 'voltar' pra retornar ao menu ou 'sair' pra encerrar.")
+            conversation_history = []
+            while True:
+                user_input = input("Você: ").strip()
+                if user_input.lower() == "sair":
+                    print("Encerrando Barsa. Até mais!")
+                    return
+                elif user_input.lower() == "voltar":
+                    print("Voltando ao menu principal...")
+                    break
+                if user_input:
+                    conversation_history.append({"role": "user", "content": user_input})
+                    
+                    response = openai_model.generate_response("\n".join([msg["content"] for msg in conversation_history]))
+                    print(f"Barsa: {response}")
+                    conversation_history.append({"role": "assistant", "content": response})
         
         elif choice == "3":
             print("Abrindo interface gráfica...")

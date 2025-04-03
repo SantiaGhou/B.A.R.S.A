@@ -1,6 +1,8 @@
 import os
 import subprocess
 import pyautogui
+import time
+import shutil
 
 def execute_program(command):
     try:
@@ -32,8 +34,25 @@ def execute_program(command):
             elif "explorador" in command or "arquivos" in command:
                 subprocess.Popen("explorer.exe" if os.name == "nt" else "nautilus")
                 return "Abrindo o Explorador de Arquivos!"
-            else:
-                return "Não sei abrir esse programa ainda. Tente algo como 'abrir chrome' ou 'abrir opera'."
+            elif "documentos" in command:
+                path = os.path.expanduser("~/Documents")
+                subprocess.Popen(f'explorer "{path}"' if os.name == "nt" else f"nautilus '{path}'")
+                return "Abrindo a pasta Documentos!"
+            elif "downloads" in command:
+                path = os.path.expanduser("~/Downloads")
+                subprocess.Popen(f'explorer "{path}"' if os.name == "nt" else f"nautilus '{path}'")
+                return "Abrindo a pasta Downloads!"
+            elif "arquivo" in command:
+                # Extrair nome do arquivo (simples, assume que vem depois de "abrir arquivo")
+                parts = command.split("arquivo")
+                if len(parts) > 1 and parts[1].strip():
+                    file_name = parts[1].strip()
+                    file_path = os.path.expanduser(f"~/Desktop/{file_name}")
+                    if os.path.exists(file_path):
+                        os.startfile(file_path) if os.name == "nt" else subprocess.Popen(["xdg-open", file_path])
+                        return f"Abrindo o arquivo {file_name}!"
+                    else:
+                        return f"Arquivo {file_name} não encontrado na Área de Trabalho!"
 
         # Fechar programas
         elif "fechar" in command:
@@ -58,8 +77,6 @@ def execute_program(command):
             elif "spotify" in command:
                 pyautogui.hotkey("alt", "f4")
                 return "Fechando o Spotify!"
-            else:
-                return "Qual programa você quer fechar? Tente 'fechar chrome' ou 'fechar opera'."
 
         # Controle de volume
         elif "volume" in command:
@@ -72,10 +89,38 @@ def execute_program(command):
             elif "mutar" in command or "mudo" in command:
                 pyautogui.hotkey("volumemute")
                 return "Volume mutado!"
+
+        # Ações de sistema
+        elif "capturar tela" in command or "print" in command or "screenshot" in command:
+            desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+            screenshot_path = os.path.join(desktop, f"screenshot_{int(time.time())}.png")  # Nome único com timestamp
+            os.makedirs(desktop, exist_ok=True)  # Garante que o diretório existe
+            screenshot = pyautogui.screenshot()
+            screenshot.save(screenshot_path)
+            return f"Captura de tela salva em {screenshot_path}!"
+        elif "desligar" in command:
+            if os.name == "nt":
+                subprocess.Popen("shutdown /s /t 5")
+                return "Desligando o computador em 5 segundos! (Cancele com 'shutdown /a' se precisar)"
             else:
-                return "O que você quer fazer com o volume? Tente 'aumentar volume' ou 'mutar volume'."
+                subprocess.Popen("shutdown -h now")
+                return "Desligando o computador agora!"
+        elif "reiniciar" in command:
+            if os.name == "nt":
+                subprocess.Popen("shutdown /r /t 5")
+                return "Reiniciando o computador em 5 segundos! (Cancele com 'shutdown /a' se precisar)"
+            else:
+                subprocess.Popen("reboot")
+                return "Reiniciando o computador agora!"
+        elif "esvaziar lixeira" in command:
+            if os.name == "nt":
+                from winshell import recycle_bin
+                recycle_bin().empty(confirm=False, show_progress=False, sound=False)
+                return "Lixeira esvaziada!"
+            else:
+                return "Esvaziar lixeira ainda não suportado no Linux."
 
         else:
-            return "Comando não reconhecido. Tente 'abrir chrome', 'fechar opera' ou 'aumentar volume'."
+            return "Comando não reconhecido. Tente 'abrir documentos', 'capturar tela' ou 'desligar'."
     except Exception as e:
         return f"Erro ao executar o comando: {str(e)}"
