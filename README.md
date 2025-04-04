@@ -119,7 +119,7 @@ cd B.A.R.S.A
   - [x] Criar módulo `utils/audio_utils.py`
   - [x] Utilizar biblioteca `speech_recognition` para capturar e processar áudio
   - [ ] Testar funcionalidade em diferentes ambientes (ruído, volume baixo, etc.)
-  - [ ] Integrar transcrição com respostas da IA
+  - [x] Integrar transcrição com respostas da IA
 
 ---
 
@@ -142,10 +142,10 @@ cd B.A.R.S.A
 ---
 
 ### 💻 Interação com Programas do Computador
-- [ ] Desenvolver funcionalidade para abrir, fechar e interagir com programas locais
-  - [ ] Criar módulo `utils/program_utils.py`
-  - [ ] Utilizar biblioteca `pyautogui` ou similar para controle de janelas
-  - [ ] Implementar comandos de voz ou texto para gerenciar programas
+- [x] Desenvolver funcionalidade para abrir, fechar e interagir com programas locais
+  - [x] Criar módulo `utils/program_utils.py`
+  - [x] Utilizar biblioteca `pyautogui` ou similar para controle de janelas
+  - [x] Implementar comandos de voz ou texto para gerenciar programas
   - [ ] Testar compatibilidade com diferentes sistemas operacionais
 
 ---
